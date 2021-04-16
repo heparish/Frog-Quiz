@@ -20,6 +20,72 @@ function Timer(maxMinutes) {
       return min + ':' + sec;
     }
 
+    function init() {
+        root = document.createElement('div');
+        root.classList.add('quiz__timer');
+        
+        display = document.createElement('span');
+        display.classList.add('quiz__timer__display');
+        display.innerText = formatTime();
+        root.appendChild(display)
+      }
+      
+      function update() {
+        time.seconds = time.seconds - 1;
+        
+        if (time.seconds < 0) {
+          time.minutes = time.minutes - 1;
+          time.seconds = 59;
+        }
+         
+        display.innerText = formatTime();
+        
+        if (time.minutes === 0 && time.seconds === 0) {
+          stop();
+          timeoutCallback();
+        }
+      }
+      
+      function mount(node) {
+        node.appendChild(root);
+      }
+      
+      function onTimeout(callback) {
+        timeoutCallback = callback;
+      }
+      
+      function unmount() {
+        stop();
+        root.remove();
+      }
+      
+      function start() {
+        jobId = window.setInterval(update, UPDATE_RATE);
+      }
+      
+      function stop() {
+        if (jobId !== null) {
+          window.clearInterval(jobId);
+          jobId = null;
+        }
+      }
+      
+      function getCurrentTime() {
+        return display.innerText;
+      }
+      
+      init();
+      
+      return {
+        mount: mount,
+        unmount: unmount,
+        start: start,
+        stop: stop,
+        onTimeout: onTimeout,
+        getCurrentTime: getCurrentTime
+      }
+    }
+
 (function(){
     // Functions
     function buildQuiz(){
@@ -177,4 +243,3 @@ function Timer(maxMinutes) {
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
   })();
-  
