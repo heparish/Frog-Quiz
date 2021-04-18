@@ -1,90 +1,35 @@
-function Timer(maxMinutes) {
-    var root = null;
-    var display = null;
-    var time = {
-      minutes: maxMinutes,
-      seconds: 0
-    };
-    var UPDATE_RATE = 1000;
-    var jobId = null;
-    var timeoutCallback = null;
-    
-    function formatTime() {
-      var min = time.minutes;
-      var sec = time.seconds;
-  
-      if (sec < 10) {
-        sec = '0' + sec;
-      }
-      
-      return min + ':' + sec;
-    }
+var timerEl = document.getElementById('countdown');
 
-    function init() {
-        root = document.createElement('div');
-        root.classList.add('quiz__timer');
-        
-        display = document.createElement('span');
-        display.classList.add('quiz__timer__display');
-        display.innerText = formatTime();
-        root.appendChild(display)
-      }
+function countdown() {
+  var timeLeft = 3;
+ 
+  var timeInterval = setInterval(function () {
+   
+    if (timeLeft > 1) {
+     
+      timerEl.textContent = 'Time: ' + timeLeft ;
       
-      function update() {
-        time.seconds = time.seconds - 1;
-        
-        if (time.seconds < 0) {
-          time.minutes = time.minutes - 1;
-          time.seconds = 59;
-        }
-         
-        display.innerText = formatTime();
-        
-        if (time.minutes === 0 && time.seconds === 0) {
-          stop();
-          timeoutCallback();
-        }
-      }
-      
-      function mount(node) {
-        node.appendChild(root);
-      }
-      
-      function onTimeout(callback) {
-        timeoutCallback = callback;
-      }
-      
-      function unmount() {
-        stop();
-        root.remove();
-      }
-      
-      function start() {
-        jobId = window.setInterval(update, UPDATE_RATE);
-      }
-      
-      function stop() {
-        if (jobId !== null) {
-          window.clearInterval(jobId);
-          jobId = null;
-        }
-      }
-      
-      function getCurrentTime() {
-        return display.innerText;
-      }
-      
-      init();
-      
-      return {
-        mount: mount,
-        unmount: unmount,
-        start: start,
-        stop: stop,
-        onTimeout: onTimeout,
-        getCurrentTime: getCurrentTime
-      }
+      timeLeft--;
+    } else if (timeLeft === 1) {
+
+      timerEl.textContent = 'Time: ' + timeLeft ;
+      timeLeft--;
+    } else {
+
+      timerEl.textContent = '';
+      clearInterval(timeInterval);      
+      displayMessage();
     }
+  }, 1000);
+}
+
+function displayMessage() {
+    document.getElementById('countdown').innerHTML = 'Times up!';
+    clearInterval(interval);
+}
+
+countdown();
+
 
 (function(){
     // Functions
@@ -126,7 +71,7 @@ function Timer(maxMinutes) {
       quizContainer.innerHTML = output.join('');
     }
   
-    function showResults(){
+function showResults(){
   
       // gather answer containers from our quiz
       const answerContainers = quizContainer.querySelectorAll('.answers');
@@ -161,7 +106,7 @@ function Timer(maxMinutes) {
       resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
     }
   
-    function showSlide(n) {
+function showSlide(n) {
       slides[currentSlide].classList.remove('active-slide');
       slides[n].classList.add('active-slide');
       currentSlide = n;
@@ -181,11 +126,11 @@ function Timer(maxMinutes) {
       }
     }
   
-    function showNextSlide() {
+function showNextSlide() {
       showSlide(currentSlide + 1);
     }
   
-    function showPreviousSlide() {
+function showPreviousSlide() {
       showSlide(currentSlide - 1);
     }
   
@@ -194,6 +139,14 @@ function Timer(maxMinutes) {
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
     const myQuestions = [
+      {
+        question: "Ready to test you knowledge on frogs?",
+        answers: {
+          a: "Yes!",
+          b: "No",
+        },
+        correctAnswer: "a"
+      },
       {
         question: "How many species of frogs are there?",
         answers: {
@@ -226,7 +179,6 @@ function Timer(maxMinutes) {
       }
     ];
   
-    // Kick things off
     buildQuiz();
   
     // Pagination
@@ -238,7 +190,6 @@ function Timer(maxMinutes) {
     // Show the first slide
     showSlide(currentSlide);
   
-    // Event listeners
     submitButton.addEventListener('click', showResults);
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
