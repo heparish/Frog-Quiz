@@ -8,7 +8,6 @@
     --light: #92DE34;
     --dark: #025600;
   }
-
 body{
   font-size: 20px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -22,16 +21,32 @@ h1{
   padding: 30px;
   font-size: 36px;
   background-color: var(--dark);
-  color: #fff;
+  color: var(--background-accent);
 }
 h2{
   font-weight: 150;
   float: right;
   padding-right: 97px;
-  padding-top: 18px;
+  padding-top: 16px;
 }
-.countdown {
-    position: fixed;
+#disappear{
+  display:inline-flex;
+}
+h3{
+  display:inline;
+  text-align:center;
+  color: var(--dark);
+  font-weight: 150;
+  font-size: 66px;
+  outline: none;
+  border: none;
+  background-color: var(--light);
+  width: 491px;
+  height: 81px;
+  border-radius: 30px;
+}
+#countdown {
+    position: inherit;
     top: 0;
     right: 0;
   }
@@ -70,16 +85,20 @@ h2{
   margin-bottom: 15px;
   margin-left: 5px;
 }
+#buttons {
+  padding: 30px;
+  display: flex;
+}
 button{
   position: relative;
   margin-top: 222px;
-  text-align: center
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif`;
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	font-size: 22px;
 	background-color: var(--dark);
-	color: #fff;
+	color: var(--background-accent);
 	border: 0px;
-	border-radius: 3px;
+	border-radius: 30px;
 	padding: 20px;
 	cursor: pointer;
 }
@@ -96,8 +115,29 @@ button{
   opacity: 1;
   z-index: 2;
 }
-.quiz-container{
+#quiz-container{
   position: relative;
   height: 200px;
   margin-top: 40px;
+}
+#resultsPage{
+  display: block;
+  margin: 0 auto 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30vh;
+}
+#results{
+  display: unset;
+  margin-top: 222px;
+  text-align:center;
+  color: var(--dark);
+  font-weight: 150;
+  font-size: 66px;
+  outline: none;
+  border: none;
+  background-color: var(--light);
+  width: flex;
+  border-radius: 30px;
 }

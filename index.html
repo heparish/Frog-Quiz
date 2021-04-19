@@ -7,16 +7,56 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Quiz</title>
     </head>
-
-    <h1>Quiz on Frogs!</h1>
-    <h2 id="countdown"></h2>
-    <div class="quiz-container">
-      <div id="quiz"></div>
+    
+    <h1>🐸Quiz on Frogs!🐸</h1>
+<!--This div is how I make the 'start' page disappear-->
+    <div id="disappear">
+      <h3>Are you ready?</h3>
+      <button id="start" style="
+        margin-top: 67px;
+        width: 147px;
+        height: 80px;
+        margin-left: 10px;
+      ">Start Quiz</button>
     </div>
-    <button id="previous" style="margin-top: 240px;">Previous Question</button>
-    <button id="next" style="margin-top: 240px;">Next Question</button>
-    <button id="submit" style="margin-top: 240px;">Submit Quiz</button>
+
+    
+<!--This div will hide the quiz to display the final results-->
+  <div id="showFinal">
+    <h2 id="countdown"></h2>
+      <div id="quiz-container" style="display: none;">
+        <div id="quiz"></div>
+      </div>
+      <div id="buttons" style="display: none;">
+      <button id="previous" style="margin-top: 200px;">Previous Question</button>
+      <button id="next" style="margin-top: 200px;">Next Question</button>
+      <button id="submit" style="margin-top: 200x;">Submit Quiz</button>
+    </div>
+  </div>
+  
+  <div id="resultsPage">
+
     <div id="results"></div>
+    
+  </div>
+
+  <!--<section class="card" id="results">
+    <!--tells them the results the received
+    <article class="card-body">
+        <h1 class="card-title">Finished!</h1>
+        <p class="card-text" id="result-text"> You got <span id="userGotCorrect"></span> out of 10 questions correct.</p>
+        <p class="card-text" id="result-text"> Your final score is<span id="userScore">.</span></p>
+        <p class="card-text" id="result-text"> Enter your Initials: <input type="text" id="userInitials"> 
+        <button class="button" id="submitButton">Submit</button> 
+        </p>
+    </article>
+    <article class="card-body">
+        <h1 class="card-title">Correct Answers</h1>
+        <ol class="list" id="correctAnswersBoard"></ol>
+        </p>
+    </article>
+    <article class="footer respond"></article>
+</section>-->
 
     <script src="./assets/js/script.js"></script>
   </body>

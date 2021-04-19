@@ -1,3 +1,4 @@
+//countdown code
 var timerEl = document.getElementById('countdown');
 
 function countdown() {
@@ -23,14 +24,12 @@ function countdown() {
   }, 1000);
 }
 
+//display timer message
 function displayMessage() {
     document.getElementById('countdown').innerHTML = 'Times up!';
-    clearInterval(interval);
 }
 
-countdown();
-
-
+//start of questions code
 (function(){
     // Functions
     function buildQuiz(){
@@ -73,14 +72,14 @@ countdown();
   
 function showResults(){
   
-      // gather answer containers from our quiz
-      const answerContainers = quizContainer.querySelectorAll('.answers');
+     // gather answer containers from our quiz
+    const answerContainers = quizContainer.querySelectorAll('.answers');
   
       // keep track of user's answers
       let numCorrect = 0;
-  
-      // for each question...
-      myQuestions.forEach( (currentQuestion, questionNumber) => {
+      let score = 0;
+    // for each question...
+    myQuestions.forEach( (currentQuestion, questionNumber) => {
   
         // find selected answer
         const answerContainer = answerContainers[questionNumber];
@@ -91,19 +90,13 @@ function showResults(){
         if(userAnswer === currentQuestion.correctAnswer){
           // add to the number of correct answers
           numCorrect++;
-  
-          // color the answers green
-          answerContainers[questionNumber].style.color = 'lightgreen';
-        }
-        // if answer is wrong or blank
-        else{
-          // color the answers red
-          answerContainers[questionNumber].style.color = 'red';
+          score++; 
         }
       });
   
       // show number of correct answers out of total
       resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+      resultsContainer.innerHTML = `You got ${score} out of 10 questions correct!`;
     }
   
 function showSlide(n) {
@@ -138,15 +131,8 @@ function showPreviousSlide() {
     const quizContainer = document.getElementById('quiz');
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
+    const startButton = document.getElementById('start')
     const myQuestions = [
-      {
-        question: "Ready to test you knowledge on frogs?",
-        answers: {
-          a: "Yes!",
-          b: "No",
-        },
-        correctAnswer: "a"
-      },
       {
         question: "How many species of frogs are there?",
         answers: {
@@ -187,10 +173,32 @@ function showPreviousSlide() {
     const slides = document.querySelectorAll(".slide");
     let currentSlide = 0;
   
-    // Show the first slide
-    showSlide(currentSlide);
-  
+    // Shows the first page and then disappears and makes time start
+    
+    startButton.addEventListener('click', function(e){
+      e.preventDefault()
+      disappear.style.display = "none"
+      container.style.display = "block"
+      buttons.style.display = "block"
+      showSlide(currentSlide);
+      countdown();
+    });
+    
+    submitButton.addEventListener('click', function(e){
+      e.preventDefault()
+      showFinal.style.display = "none"
+      container.style.display = "block"
+      buttons.style.display = "block"
+      showSlide(currentSlide);
+    });
+
+    const container = document.getElementById("quiz-container");
+    const buttons = document.getElementById("buttons");
+    const disappear = document.getElementById("disappear");
+    const showFinal = document.getElementById("showFinal");
+    const resultsPage = document.getElementById("resultsPage");
     submitButton.addEventListener('click', showResults);
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
   })();
+
