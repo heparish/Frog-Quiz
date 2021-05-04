@@ -67,6 +67,8 @@ function displayMessage() {
         quizContainer.innerHTML = output.join('');
     }
 
+    let score = 0;
+
     function showResults() {
 
         // gather answer containers from our quiz
@@ -74,7 +76,7 @@ function displayMessage() {
 
         // keep track of user's answers
         let numCorrect = 0;
-        let score = 0;
+       
 
         myQuestions.forEach((currentQuestion, questionNumber) => {
 
@@ -183,27 +185,23 @@ function displayMessage() {
         },
     ];
 
-  /*  var score = document.getElementById('score');
-    var saveButton = document.getElementById("save");
-    var userInitials = document.getElementById("userInitials");
+    // var score = document.getElementById('score').value;
+    var saveButton = document.getElementById("saveButton");
+    var userInitials = document.getElementById("userInitials").value.trim();
     
     function saveScore() {
     
-        var score = {
-          score: score.value,
-          userInitials: userInitials.value
-        };
-        localStorage.setItem("scoreUserInitials", JSON.stringify(scoreUserInitials));
+        
     }
-    function renderSaveScore() {
+    // function renderSaveScore() {
      
-      var saveScore = JSON.parse(localStorage.getItem("scoreUserInitials"));
-    }
+    //   var saveScore = JSON.parse(localStorage.getItem("scoreUserInitials"));
+    // }
     
-    function init() {
-      renderSaveScore();
-    }
-    init(); */
+    // function init() {
+    //   renderSaveScore();
+    // }
+    // init(); 
 
     buildQuiz();
 
@@ -234,11 +232,25 @@ function displayMessage() {
         showSlide(currentSlide);
     });
 
-  //  saveButton.addEventListener("click", function(event) {
-  //    event.preventDefault();
-  //    saveScore();
-  //    renderSaveScore();
-  //    });
+    submitButton.addEventListener('click', function(e) {
+        showFinal.style.display = "none"
+        container.style.display = "block"
+        buttons.style.display = "block"
+        ResultsPage.style.display = ""
+        showSlide(currentSlide);
+    });
+
+  saveButton.addEventListener("click", function(event) {
+   event.preventDefault();
+//   saveScore
+  var highScore = {
+    score: score,
+    userInitials: userInitials,
+  };
+  console.log(highScore)
+  localStorage.setItem("scoreUserInitials", JSON.stringify(score));;
+// renderSaveScore();
+   });
 
     const container = document.getElementById("quiz-container");
     const buttons = document.getElementById("buttons");
