@@ -32,7 +32,6 @@ function displayMessage() {
 }
 
 //start of questions code
-(function() {
 
     function buildQuiz() {
        
@@ -95,6 +94,7 @@ function displayMessage() {
         resultsContainer.innerHTML = `You got ${score} out of 5 questions correct!`;
 
         scoreContainer.innerHTML = ` ${score}`;
+        
 
     }
 
@@ -187,21 +187,33 @@ function displayMessage() {
 
     // var score = document.getElementById('score').value;
     var saveButton = document.getElementById("saveButton");
-    var userInitials = document.getElementById("userInitials").value.trim();
-    
-    function saveScore() {
-    
-        
+ 
+ // variable to store score.
+ var scoreArr=[]   
+//  function to get items from localstorage
+    function getScore() {
+    scoreArr =JSON.parse(localStorage.getItem("scoreUserInitials"))
+    console.log(scoreArr,"get item")
+     //get div to append the scores by id
+     var displayScores= document.querySelector("#displayScores") 
+     var scoreTable= document.querySelector("#table")  
+    //style it so it can be displayed
+    displayScores.style.display="block"
+    //do a loop to iterate through the different scores
+    for(var i=0; i<scoreArr.length;i++){
+        //create elements that we can append to the displayScores div
+        var test=scoreArr[0]
+        console.log(test, "first index")
+        var scoreRow=document.createElement("li")
+        scoreRow.setAttribute('class', 'scores')
+        var userInitials=scoreArr[i].userInitials
+        var scoreSave=scoreArr[i].score
+        scoreRow.textContent=userInitials + ":" +scoreSave
+        scoreTable.append(scoreRow)
+        console.log(scoreTable)
     }
-    // function renderSaveScore() {
-     
-    //   var saveScore = JSON.parse(localStorage.getItem("scoreUserInitials"));
-    // }
-    
-    // function init() {
-    //   renderSaveScore();
-    // }
-    // init(); 
+
+    }
 
     buildQuiz();
 
@@ -209,6 +221,7 @@ function displayMessage() {
     const previousButton = document.getElementById("previous");
     const nextButton = document.getElementById("next");
     const slides = document.querySelectorAll(".slide");
+    const saveButn = document.querySelectorAll(".saveButton");
     let currentSlide = 0;
 
 
@@ -218,7 +231,6 @@ function displayMessage() {
         disappear.style.display = "none"
         container.style.display = "block"
         buttons.style.display = "block"
-        ResultsPage.style.display = "none"
         showSlide(currentSlide);
         countdown();
     });
@@ -232,7 +244,7 @@ function displayMessage() {
         showSlide(currentSlide);
     });
 
-    submitButton.addEventListener('click', function(e) {
+    saveButton.addEventListener('click', function(e) {
         showFinal.style.display = "none"
         container.style.display = "block"
         buttons.style.display = "block"
@@ -242,24 +254,30 @@ function displayMessage() {
 
   saveButton.addEventListener("click", function(event) {
    event.preventDefault();
+   var userInitials = document.getElementById("userInitials").value.trim();
+   
 //   saveScore
   var highScore = {
     score: score,
     userInitials: userInitials,
   };
-  console.log(highScore)
-  localStorage.setItem("scoreUserInitials", JSON.stringify(score));;
-// renderSaveScore();
+  scoreArr.push(highScore)
+  console.log(scoreArr, "set item")
+  localStorage.setItem("scoreUserInitials", JSON.stringify(highScore));;
+    getScore();
+
+    document.getElementById("displayScores").innerHTML = localStorage.getItem("userInitials", "scoreUserInitials");
    });
 
     const container = document.getElementById("quiz-container");
     const buttons = document.getElementById("buttons");
     const disappear = document.getElementById("disappear");
     const showFinal = document.getElementById("showFinal");
-    const ResultsPage = document.getElementById("ResultsPage");
+    const ResultsPage = document.getElementById("resultsPage");
+    const displayScores = document.getElementById("displayScores");
     submitButton.addEventListener('click', showResults);
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
-    //saveButton.addEventListener("click", saveResults);
-})();
+    saveButton.addEventListener("click", displayScores);
 
+   
